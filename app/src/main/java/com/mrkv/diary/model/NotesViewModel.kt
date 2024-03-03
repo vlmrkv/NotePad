@@ -16,12 +16,13 @@ import kotlinx.coroutines.launch
 class NotesViewModel(application: Application) : ViewModel() {
 
     private val db = Room.databaseBuilder(
-        application,
+        application.applicationContext,
         NotesDatabase::class.java,
         "db-notes"
     ).build()
 
-    private var notes by mutableStateOf(listOf<Note>())
+    var notes by mutableStateOf(listOf<Note>())
+        private set
 
     // load initial data from Room asynchronously
     init {
@@ -38,15 +39,16 @@ class NotesViewModel(application: Application) : ViewModel() {
         text: String,
         audio: String,
         date: String
-        ) {
+    ) {
         val noteObj = Note(
             (System.currentTimeMillis() % Int.MAX_VALUE).toInt(),// Generate ID from timestamp
             image,
             title,
             text,
             audio,
-            date)
-        notes += listOf(noteObj)
+            date
+        )
+        notes = notes.plus(listOf(noteObj))
         GlobalScope.launch { db.notes().insert(noteObj) }
     }
 

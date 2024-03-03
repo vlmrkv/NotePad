@@ -1,5 +1,7 @@
 package com.mrkv.diary.view
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,42 +14,84 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.mrkv.diary.model.Note
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 
 class DiaryList {
 
     @Composable
-    fun NotesList(navController: NavController) {
+    fun NotesList(navController: NavController/*, notesViewModel: NotesViewModel*/) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             items(10) {
-                NoteListItem(navController)
+                NoteListItem(
+                    navController, note = Note(
+                        id = 1,
+                        image = null,
+                        title = "Test",
+                        textNote = "My first note",
+                        audioNote = null,
+                        date = null
+                    )
+                )
             }
+        }
+        FloatingActionButton(navController)
+    }
+
+    @Composable
+    fun FloatingActionButton(navController: NavController) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+        ) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+            ) {
+                FloatingActionButton(onClick = { navController.navigate("createNotePage") }) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add Button")
+                }
+            }
+
         }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun NoteListItem(navController: NavController) {
+    fun NoteListItem(
+        navController: NavController,
+        note: Note
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -67,7 +111,7 @@ class DiaryList {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CoilImage(
-                        imageModel = { "https://plus.unsplash.com/premium_photo-1671478394583-3d91fd9c7ca5" },
+                        imageModel = { note.image },
                         imageOptions = ImageOptions(
                             contentScale = ContentScale.Crop,
                             alignment = Alignment.Center
@@ -81,20 +125,24 @@ class DiaryList {
                         modifier = Modifier
                             .weight(2.0f)
                     ) {
-                        Text(
-                            text = "Header of notes",
-                            style = TextStyle(
-                                fontSize = 24.sp,
-                                textAlign = TextAlign.Justify,
-                                fontWeight = FontWeight.Bold
+                        note.title?.let {
+                            Text(
+                                text = it,
+                                style = TextStyle(
+                                    fontSize = 24.sp,
+                                    textAlign = TextAlign.Justify,
+                                    fontWeight = FontWeight.Bold
+                                )
                             )
-                        )
-                        Text(
-                            text = "Date of notes",
-                            style = TextStyle(
-                                textAlign = TextAlign.Justify
+                        }
+                        note.textNote?.let {
+                            Text(
+                                text = it,
+                                style = TextStyle(
+                                    textAlign = TextAlign.Justify
+                                )
                             )
-                        )
+                        }
                     }
                     Column(
                         modifier = Modifier
@@ -104,13 +152,15 @@ class DiaryList {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = "2024-02-08\n13:00",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center
+                        note.date?.let {
+                            Text(
+                                text = it,
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    textAlign = TextAlign.Center
+                                )
                             )
-                        )
+                        }
                     }
                 }
             }

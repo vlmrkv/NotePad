@@ -64,6 +64,8 @@ dependencies {
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     // UI
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material3:material3")
