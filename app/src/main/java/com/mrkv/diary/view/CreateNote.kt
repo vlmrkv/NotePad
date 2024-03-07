@@ -1,7 +1,9 @@
 package com.mrkv.diary.view
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,12 +31,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mrkv.diary.R
+import com.mrkv.diary.model.NotesViewModel
 
 class CreateNote {
     @Composable
-    fun CreateNotePage() {
-        val inputValue = remember { mutableStateOf(TextFieldValue()) }
+    fun CreateNotePage(notesViewModel: NotesViewModel = viewModel(factory = NotesViewModel.factory)) {
+        val notesList = notesViewModel.notesList
+        val titleValue = remember { mutableStateOf(TextFieldValue()) }
+        val textValue = remember { mutableStateOf(TextFieldValue()) }
         Column(
             modifier = Modifier
                 .fillMaxSize(),
@@ -47,18 +53,33 @@ class CreateNote {
                     .align(Alignment.CenterHorizontally)
                     .padding(32.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
+                    .border(2.dp, Color.Black, RoundedCornerShape(10.dp))
+                    .clickable {
+
+                    },
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "Image",
                 contentScale = ContentScale.Crop,
             )
 
             TextField(
-                value = inputValue.value,
-                onValueChange = { inputValue.value = it },
+                value = titleValue.value,
+                onValueChange = { titleValue.value = it },
+                placeholder = { Text(text = "Заголовок") },
+                modifier = Modifier
+                    .padding(16.dp, 2.dp)
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .clip(RoundedCornerShape(10.dp)),
+                maxLines = 1
+            )
+
+            TextField(
+                value = textValue.value,
+                onValueChange = { textValue.value = it },
                 placeholder = { Text(text = "Запиши свои мысли") },
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(16.dp, 2.dp)
                     .fillMaxWidth()
                     .height(100.dp)
                     .clip(RoundedCornerShape(10.dp)),
@@ -140,13 +161,10 @@ class CreateNote {
                         .width(100.dp)
                         .height(50.dp),
                     onClick = {
-//                    notesViewModel.addNote(
-//                        image = "",
-//                        title = "",
-//                        text = "",
-//                        audio = "",
-//                        date = ""
-//                    )
+                        notesList.forEach {
+                            it.title = titleValue.value.toString()
+                            it.textNote = textValue.value.toString()
+                        }
                     }
                 ) {
                     Text(text = "Save")

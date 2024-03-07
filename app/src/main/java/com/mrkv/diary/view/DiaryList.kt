@@ -1,7 +1,5 @@
 package com.mrkv.diary.view
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,48 +17,42 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.mrkv.diary.model.Note
+import com.mrkv.diary.model.NotesViewModel
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 
 class DiaryList {
 
     @Composable
-    fun NotesList(navController: NavController/*, notesViewModel: NotesViewModel*/) {
+    fun NotesList(
+        navController: NavController,
+        notesViewModel: NotesViewModel = viewModel(factory = NotesViewModel.factory)
+    ) {
+        val notesList = notesViewModel.notesList
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(10) {
+            items(notesList.size) {
                 NoteListItem(
-                    navController, note = Note(
-                        id = 1,
-                        image = null,
-                        title = "Test",
-                        textNote = "My first note",
-                        audioNote = null,
-                        date = null
-                    )
+                    navController, notesList[it]
                 )
             }
         }
