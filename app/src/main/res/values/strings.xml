@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Diary</string>
+    <string name="no_list_description">List is empty\nClick + to add note</string>
+    <string name="note_entry_title">Add Note</string>
+    <string name="item_title_req">Заголовок</string>
+    <string name="item_textNote_req">Текстовая заметка</string>
+    <string name="save_action">Save</string>
+    <string name="cancel_action">Cancel</string>
+    <string name="required_fields">*Обязательное поле</string>
+    <string name="edit_note_title">Edit Note</string>
+    <string name="note_details_title">Note Details</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="attention">Attention</string>
+    <string name="delete_question">Are you sure you want to delete?</string>
+    <string name="no">No</string>
 </resources>
