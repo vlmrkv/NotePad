@@ -33,7 +33,7 @@ A pet-project to touch Jetpack Compose.
 
 ## Screens
 
-<img src="screenshots/main_screen.png" width="49%"> <img src="screenshots/details_screen.png" width="49%"> <img src="screenshots/edit_screen.png" width="49%">
+![](src="screenshots/main_screen.png") ![](screenshots/details_screen.png) ![](screenshots/edit_screen.png)
 
 
 
