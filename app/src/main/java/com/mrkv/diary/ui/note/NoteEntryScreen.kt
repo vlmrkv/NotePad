@@ -1,6 +1,7 @@
 package com.mrkv.diary.ui.note
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -103,14 +104,17 @@ fun NoteEntryBody(
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        ItemInputForm(
-            noteDetails = noteUiState.noteDetails,
-            onValueChange = onNoteValueChange,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row {
+            ItemInputForm(
+                noteDetails = noteUiState.noteDetails,
+                onValueChange = onNoteValueChange,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = modifier
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround,
         ) {
             Button(
                 onClick = onSaveClick,
@@ -153,7 +157,7 @@ fun ItemInputForm(
                 .width(350.dp)
                 .height(350.dp)
                 .align(Alignment.CenterHorizontally)
-                .padding(16.dp)
+                .padding(dimensionResource(id = R.dimen.padding_large))
                 .clip(RoundedCornerShape(10.dp))
                 .border(2.dp, Color.Black, RoundedCornerShape(10.dp))
                 .clickable {
@@ -194,71 +198,6 @@ fun ItemInputForm(
             enabled = enabled,
             maxLines = 5
         )
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(80.dp),
-            elevation = CardDefaults.cardElevation(4.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(5.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(.2f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = "00:00")
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(.5f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    LinearProgressIndicator(
-                        progress = { .7f },
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(.3f)
-                        .padding(10.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .size(70.dp, 70.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.record_icon),
-                            contentDescription = "record button"
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(.3f)
-                        .padding(10.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Button(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .size(70.dp, 70.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.play_icon),
-                            contentDescription = "play button"
-                        )
-                    }
-                }
-            }
-        }
     }
 }
 

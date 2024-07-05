@@ -29,8 +29,7 @@ class NoteEntryViewModel(private val notesRepository: NotesRepository) : ViewMod
 
     fun validateInput(uiState: NoteDetails = noteUiState.noteDetails): Boolean {
         return with(uiState) {
-            image.isNotBlank() && title.isNotBlank() && textNote.isNotBlank()
-                    && audioNote.isNotBlank() && date.isNotBlank()
+            title.isNotBlank() && textNote.isNotBlank()
         }
     }
 }

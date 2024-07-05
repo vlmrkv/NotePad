@@ -18,7 +18,7 @@ object NoteEditDestination : NavigationDestination {
     override val route: String = "note_edit"
     override val titleRes: Int = R.string.edit_note_title
     const val noteIdArg = "noteId"
-    val routeWithArgs = "$route/${noteIdArg}"
+    val routeWithArgs = "$route/{$noteIdArg}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

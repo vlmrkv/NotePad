@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.mrkv.diary.ui.home.HomeDestination
 import com.mrkv.diary.ui.home.HomeScreen
-import com.mrkv.diary.ui.note.NoteDetailScreen
+import com.mrkv.diary.ui.note.NoteDetailsScreen
 import com.mrkv.diary.ui.note.NoteDetailsDestination
 import com.mrkv.diary.ui.note.NoteEditDestination
 import com.mrkv.diary.ui.note.NoteEditScreen
@@ -46,7 +46,7 @@ fun NotesNavHost(
                 type = NavType.IntType
             })
         ) {
-            NoteDetailScreen(
+            NoteDetailsScreen(
                 navigateToEditNote = { navController.navigate("${NoteEditDestination.route}/$it") },
                 navigateBack = { navController.navigateUp() })
         }

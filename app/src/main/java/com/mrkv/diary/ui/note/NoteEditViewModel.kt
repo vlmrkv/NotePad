@@ -45,7 +45,7 @@ class NoteEditViewModel(
 
     private fun validateInput(uiState: NoteDetails = noteUiState.noteDetails): Boolean {
         return with(uiState) {
-            title.isNotBlank() && textNote.isNotBlank() && audioNote.isNotBlank()
+            title.isNotBlank() && textNote.isNotBlank()
         }
     }
 }

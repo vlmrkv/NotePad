@@ -191,8 +191,7 @@ private fun NoteItem(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .weight(1.0f)
-                        .background(color = Color.Cyan),
+                        .weight(1.0f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,13 +19,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -48,6 +44,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mrkv.diary.NotesTopAppBar
@@ -55,6 +52,7 @@ import com.mrkv.diary.R
 import com.mrkv.diary.data.Note
 import com.mrkv.diary.ui.AppViewModelProvider
 import com.mrkv.diary.ui.navigation.NavigationDestination
+import com.mrkv.diary.ui.theme.DiaryTheme
 import kotlinx.coroutines.launch
 
 object NoteDetailsDestination : NavigationDestination {
@@ -66,7 +64,7 @@ object NoteDetailsDestination : NavigationDestination {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteDetailScreen(
+fun NoteDetailsScreen(
     navigateToEditNote: (Int) -> Unit,
     navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -188,73 +186,6 @@ fun NoteDetails(
                     horizontal = dimensionResource(id = R.dimen.padding_medium)
                 )
             )
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .height(80.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(5.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(.2f),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "00:00")
-                    }
-                    Column(
-                        modifier = Modifier
-                            .weight(.5f),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        LinearProgressIndicator(
-                            progress = { .7f },
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .weight(.3f)
-                            .padding(10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier
-                                .size(70.dp, 70.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.record_icon),
-                                contentDescription = "record button"
-                            )
-                        }
-                    }
-                    Column(
-                        modifier = Modifier
-                            .weight(.3f)
-                            .padding(10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier
-                                .size(70.dp, 70.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.play_icon),
-                                contentDescription = "play button"
-                            )
-                        }
-                    }
-                }
-
-            }
         }
     }
 }
@@ -263,9 +194,9 @@ fun NoteDetails(
 private fun NoteItemDetailsRow(
     @StringRes labelResId: Int, noteDetail: String, modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier) {
+    Column(modifier = modifier) {
         Text(text = stringResource(labelResId))
-        Spacer(modifier = Modifier.weight(1f))
+        //Spacer(modifier = Modifier.weight(1f))
         Text(text = noteDetail, fontWeight = FontWeight.Bold)
     }
 }
@@ -289,4 +220,30 @@ private fun DeleteConfirmationDialog(
                 Text(text = stringResource(R.string.yes))
             }
         })
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun NoteDetailsScreenPreview() {
+    DiaryTheme {
+        NoteDetailsBody(
+            NoteDetailsUiState(
+                noteDetails = NoteDetails(
+                    1,
+                    "null",
+                    "Hello",
+                    "Lorem Ipsum is simply dummy text of the printing " +
+                            "and typesetting industry. Lorem Ipsum has been " +
+                            "the industry's standard dummy text ever since the 1500s, " +
+                            "when an unknown printer took a galley of type and " +
+                            "scrambled it to make a type specimen book. " +
+                            "It has survived not only five centuries, " +
+                            "but also the leap into electronic typesetting, " +
+                            "remaining essentially unchanged. It was popularised in the 1960s " +
+                            "with the release of Letraset sheets containing Lorem Ipsum " +
+                            "passages, and more recently with desktop publishing software " +
+                            "like Aldus PageMaker including versions of Lorem Ipsum."
+                )
+            ), onDelete = { })
+    }
 }
