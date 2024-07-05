@@ -33,7 +33,7 @@ A pet-project to touch Jetpack Compose.
 
 ## Screens
 
-![](src="screenshots/main_screen.png") ![](screenshots/details_screen.png) ![](screenshots/edit_screen.png)
+<img src="https://ucarecdn.com/394c6fec-b52d-4e89-86c0-396d2dc8266e/main_screen.png" width="49%"> <img src="https://ucarecdn.com/5d820408-ddca-4052-9d65-a98965703e28/details_screen.png" width="49%"> <img src="https://ucarecdn.com/abf371ad-bd9d-41a0-b230-7b7a6a2f0e16/edit_screen.png" width="49%">
 
 
 
